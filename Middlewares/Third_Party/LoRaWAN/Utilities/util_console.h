@@ -30,7 +30,7 @@ extern "C"
 {
 #endif
 
-#define PPRINTF(...)     do{ } while( 0!= TraceSend(__VA_ARGS__) ) //Polling Mode
+#define PPRINTF(...)     PRINTF(__VA_ARGS__)
 
 #define PRINTF(...)     do{  TraceSend(__VA_ARGS__); }while(0)
 #define PRINTNOW()      do{                                                           \

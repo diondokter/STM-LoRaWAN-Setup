@@ -81,7 +81,34 @@ void HAL_MspInit(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+/**
+  * @brief  Gets IRQ number as a function of the GPIO_Pin.
+  * @param  GPIO_Pin: Specifies the pins connected to the EXTI line.
+  * @retval IRQ number
+  */
+IRQn_Type MSP_GetIRQn( uint16_t GPIO_Pin)
+{
+  switch( GPIO_Pin )
+  {
+    case GPIO_PIN_0:  return EXTI0_IRQn;
+    case GPIO_PIN_1:  return EXTI1_IRQn;
+    case GPIO_PIN_2:  return EXTI2_IRQn;
+    case GPIO_PIN_3:  return EXTI3_IRQn;
+    case GPIO_PIN_4:  return EXTI4_IRQn;
+    case GPIO_PIN_5:
+    case GPIO_PIN_6:
+    case GPIO_PIN_7:
+    case GPIO_PIN_8:
+    case GPIO_PIN_9:  return EXTI9_5_IRQn;
+    case GPIO_PIN_10:
+    case GPIO_PIN_11:
+    case GPIO_PIN_12:
+    case GPIO_PIN_13:
+    case GPIO_PIN_14:
+    case GPIO_PIN_15:
+	default: return EXTI15_10_IRQn;
+  }
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

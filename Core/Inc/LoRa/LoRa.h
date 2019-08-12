@@ -8,5 +8,6 @@
 #ifndef LORA_LORA_H_
 #define LORA_LORA_H_
 
+void LoRaTaskRun(void *argument);
 
 #endif /* LORA_LORA_H_ */

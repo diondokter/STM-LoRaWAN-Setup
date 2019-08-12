@@ -70,6 +70,8 @@ int32_t TraceSend( const char *strFormat, ...)
   va_end(vaArgs);
   int status=0;
   
+  output(buf, bufSize);
+
   BACKUP_PRIMASK();
   
   DISABLE_IRQ(); /**< Disable all interrupts by setting PRIMASK bit on Cortex*/

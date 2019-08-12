@@ -24,7 +24,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 /*low power manager configuration*/
 typedef enum
 {
@@ -35,6 +34,11 @@ typedef enum
   LPM_UART_RX_Id =  (1 << 4),
   LPM_UART_TX_Id =  (1 << 5),
 } LPM_Id_t;
+
+void output(char* data, unsigned size);
+
+#define OutputInit(txbuffer)
+#define OutputTrace(data, size) output(data, size)
 
 #define VERBOSE_LEVEL_0 0
 #define VERBOSE_LEVEL_1 1

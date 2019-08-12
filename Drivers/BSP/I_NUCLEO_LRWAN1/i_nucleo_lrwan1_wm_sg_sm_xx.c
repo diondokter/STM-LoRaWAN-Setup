@@ -24,13 +24,13 @@
 #include <string.h>
 #include "stm32l1xx_hal.h"
 #include "hw_conf.h"
-//#include "hw_usart.h"
+#include "hw_usart.h"
 #include "i_nucleo_lrwan1_wm_sg_sm_xx.h"
-//#include "tiny_sscanf.h"
+#include "tiny_sscanf.h"
 
 #include <stdarg.h>
-//#include "tiny_vsnprintf.h"
-//#include "debug.h"
+#include "tiny_vsnprintf.h"
+#include "debug.h"
 
 
 
