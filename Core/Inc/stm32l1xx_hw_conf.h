@@ -43,8 +43,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-//#define RADIO_DIO_4
-//#define RADIO_DIO_5
+#define RADIO_DIO_4
+#define RADIO_DIO_5
 
 /* LORA I/O definition */
 

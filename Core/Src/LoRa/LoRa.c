@@ -7,6 +7,7 @@
 
 #include "LoRa/LoRa.h"
 #include "lora.h"
+#include "util_console.h"
 
 /*!
  * Defines the application data transmission duty cycle. 5s, value in [ms].
@@ -21,7 +22,7 @@
  * LoRaWAN Default data Rate Data Rate
  * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled
  */
-#define LORAWAN_DEFAULT_DATA_RATE DR_0
+#define LORAWAN_DEFAULT_DATA_RATE DR_5
 /*!
  * LoRaWAN application port
  * @note do not use 224. It is reserved for certification
@@ -124,6 +125,8 @@ void LoRaTaskRun(void *argument)
 
 	LORA_Join();
 
+	long i = 1;
+
 	while (1)
 	{
 		if (LoraMacProcessRequest==LORA_SET)
@@ -133,6 +136,23 @@ void LoRaTaskRun(void *argument)
 		  LoRaMacProcess( );
 		}
 
+		if (i % 2000 == 0)
+		{
+			if (LORA_JoinStatus() == LORA_SET)
+			{
+				AppData.BuffSize = 1;
+				AppData.Port = 1;
+				AppData.Buff[0] = 1;
+				LORA_send(&AppData, LORAWAN_UNCONFIRMED_MSG);
+			}
+			else
+			{
+				LORA_Join();
+			}
+		}
+
+		HAL_Delay(10);
+		i++;
 		//osDelay(1000);
 	}
 }
@@ -144,13 +164,14 @@ void LoraMacProcessNotify(void)
 
 static void LORA_HasJoined( void )
 {
+	PRINTF("JOINED");
   LORA_RequestClass( LORAWAN_DEFAULT_CLASS );
 }
 
 
 static void LORA_RxData( lora_AppData_t *AppData )
 {
-
+	PRINTF("RX Data");
 }
 
 static void LORA_ConfirmClass ( DeviceClass_t Class )

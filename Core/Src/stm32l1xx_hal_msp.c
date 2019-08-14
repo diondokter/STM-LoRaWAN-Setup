@@ -56,7 +56,25 @@
 /* USER CODE END ExternalFunctions */
 
 /* USER CODE BEGIN 0 */
+/**
+  * @brief  Alarm A callback.
+  * @param  hrtc: RTC handle
+  * @retval None
+  */
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+{
+  TimerIrqHandler( );
+}
 
+/**
+  * @brief  EXTI line detection callbacks.
+  * @param  GPIO_Pin: Specifies the pins connected to the EXTI line.
+  * @retval None
+  */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  HW_GPIO_IrqHandler( GPIO_Pin );
+}
 /* USER CODE END 0 */
 /**
   * Initializes the Global MSP.

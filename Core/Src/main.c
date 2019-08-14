@@ -98,6 +98,7 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   LoRaTaskRun(NULL);
+  asm ("bkpt");
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

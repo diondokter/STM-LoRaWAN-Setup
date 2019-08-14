@@ -163,9 +163,7 @@ void TimerIrqHandler( void )
 {
   TimerEvent_t* cur;
   TimerEvent_t* next;
-  
 
-  
   uint32_t old =  HW_RTC_GetTimerContext( );
   uint32_t now =  HW_RTC_SetTimerContext( );
   uint32_t DeltaContext = now - old; //intentionnal wrap around

@@ -531,6 +531,11 @@ static void HW_RTC_StartWakeUpAlarm( uint32_t timeoutValue )
   RTC_AlarmStructure.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   RTC_AlarmStructure.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
   
+  NVIC_EnableIRQ(RTC_Alarm_IRQn);
+  NVIC_SetPriority(RTC_Alarm_IRQn, 0);
+  NVIC_EnableIRQ(RTC_WKUP_IRQn);
+  NVIC_SetPriority(RTC_WKUP_IRQn, 0);
+
   /* Set RTC_Alarm */
   HAL_RTC_SetAlarm_IT( &RtcHandle, &RTC_AlarmStructure, RTC_FORMAT_BIN );
 }

@@ -1639,7 +1639,8 @@ void SX1272OnDio3Irq( void* context )
     {
     case MODEM_FSK:
         break;
-    case MODEM_LORA:
+    case MODEM_LORA:;
+    	uint8_t x = SX1272Read( REG_LR_IRQFLAGS );
         if( ( SX1272Read( REG_LR_IRQFLAGS ) & RFLR_IRQFLAGS_CADDETECTED ) == RFLR_IRQFLAGS_CADDETECTED )
         {
             // Clear Irq
