@@ -50,9 +50,21 @@ void LoRa_joinNetworkBlocking()
 {
 	LoRa_joinNetwork();
 
+	uint32_t last_time = SysTimeGetMcuTime().Seconds;
+
 	while(!LoRa_isJoined())
 	{
 		LoRa_process();
+
+		SysTime_t time = SysTimeGetMcuTime();
+
+		// In the worst case we can send a join request every ~3 minutes
+		if (time.Seconds - last_time > 180)
+		{
+			last_time = time.Seconds;
+			LoRa_joinNetwork();
+		}
+
 	}
 }
 
@@ -61,20 +73,28 @@ int LoRa_isJoined()
 	return LORA_JoinStatus();
 }
 
-void LoRa_sendData(uint8_t* data, uint8_t data_length, uint8_t port, LoraConfirm_t confirmation)
+int LoRa_canSend()
+{
+	return !LoRaMacIsBusy();
+}
+
+void LoRa_sendDataBlocking(uint8_t* data, uint8_t data_length, uint8_t port, LoraConfirm_t confirmation)
+{
+	while(!LoRa_canSend() || !LoRa_sendData(data, data_length, port, confirmation))
+	{
+		LoRa_process();
+	}
+}
+
+int LoRa_sendData(uint8_t* data, uint8_t data_length, uint8_t port, LoraConfirm_t confirmation)
 {
 	lora_AppData_t appdata = { data, data_length, port };
-	LORA_send(&appdata, confirmation);
+	return !LORA_send(&appdata, confirmation);
 }
 
 void LoRa_changeClass(DeviceClass_t class)
 {
 	LORA_RequestClass(class);
-}
-
-void LoRa_setDatarate(int datarate)
-{
-	LoRaParamInit.TxDatarate = datarate;
 }
 
 void LoRa_process()
