@@ -35,16 +35,17 @@ typedef enum
   LPM_UART_TX_Id =  (1 << 5),
 } LPM_Id_t;
 
-void output(char* data, unsigned size);
+void initTrace(char* buffer);
+void outputTrace(char* data, unsigned size);
 
-#define OutputInit(txbuffer)
-#define OutputTrace(data, size) output(data, size)
+#define OutputInit(txbuffer) initTrace(txbuffer)
+#define OutputTrace(data, size) outputTrace(data, size)
 
 #define VERBOSE_LEVEL_0 0
 #define VERBOSE_LEVEL_1 1
 #define VERBOSE_LEVEL_2 2
 
-#define VERBOSE_LEVEL 0
+#define VERBOSE_LEVEL 2
 
 #if ( VERBOSE_LEVEL < VERBOSE_LEVEL_2)
 #define DBG_TRACE_MSG_QUEUE_SIZE 256

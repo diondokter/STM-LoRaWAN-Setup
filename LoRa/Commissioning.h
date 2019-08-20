@@ -46,6 +46,7 @@
 #ifdef __cplusplus
  extern "C" {
 #endif
+#include "stdint.h"
 /*!
  ******************************************************************************
  ********************************** WARNING ***********************************
@@ -83,11 +84,6 @@
  * When set to 0 the application uses the Personalization activation procedure
  */
 #define OVER_THE_AIR_ACTIVATION                     1
-
-/*!
- * Indicates if the end-device is to be connected to a private or public network
- */
-#define LORAWAN_PUBLIC_NETWORK                      true
       
 /*!
  * When set to 1 DevEui is LORAWAN_DEVICE_EUI
@@ -95,12 +91,6 @@
  *         BoardGetUniqueId function
  */
 #define STATIC_DEVICE_EUI                     1
-   
-/*!
- * IEEE Organizationally Unique Identifier ( OUI ) (big endian)
- * \remark This is unique to a company or organization
- */
-#define IEEE_OUI                                           0x01, 0x01, 0x01   
 
 /*!
  * Mote device IEEE EUI (big endian)

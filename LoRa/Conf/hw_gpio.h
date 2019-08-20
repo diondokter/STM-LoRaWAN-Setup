@@ -6,7 +6,7 @@
 (______/|_____)_|_|_| \__)_____)\____)_| |_|
     (C)2013 Semtech
 
-Description: contains hardaware configuration Macros and Constants
+Description: Bleeper board GPIO driver implementation
 
 License: Revised BSD License, see LICENSE.TXT file include in the project
 
@@ -14,9 +14,9 @@ Maintainer: Miguel Luis and Gregory Cristian
 */
 /**
   ******************************************************************************
-  * @file    stm32l1xx_hw_conf.h
+  * @file    hw_gpio.h
   * @author  MCD Application Team
-  * @brief   contains hardaware configuration Macros and Constants for stm32l1
+  * @brief   Header for driver hw_rtc.c module
   ******************************************************************************
   * @attention
   *
@@ -32,18 +32,25 @@ Maintainer: Miguel Luis and Gregory Cristian
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __HW_CONF_L1_H__
-#define __HW_CONF_L1_H__
+#ifndef __HW_GPIO_H__
+#define __HW_GPIO_H__
+
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
-/* Includes ------------------------------------------------------------------*/
-/* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/
 
+#include <stm32l1xx.h>
+   
+/* Exported types ------------------------------------------------------------*/
+   
+typedef void( GpioIrqHandler )( void* context );
+   
+/* Exported constants --------------------------------------------------------*/
+// Comment out if DIO 4 is not connected
 #define RADIO_DIO_4
+// Comment out if DIO 5 is not connected
 #define RADIO_DIO_5
 
 /* LORA I/O definition */
@@ -94,7 +101,6 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 #else
 
-
 #define RADIO_RESET_PORT                          GPIOA
 #define RADIO_RESET_PIN                           GPIO_PIN_0
 
@@ -122,87 +128,96 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define RADIO_DIO_3_PORT                          GPIOB
 #define RADIO_DIO_3_PIN                           GPIO_PIN_4
 
-#ifdef RADIO_DIO_4 
+#ifdef RADIO_DIO_4
 #define RADIO_DIO_4_PORT                          GPIOA
 #define RADIO_DIO_4_PIN                           GPIO_PIN_9
 #endif
 
-#ifdef RADIO_DIO_5 
+#ifdef RADIO_DIO_5
 #define RADIO_DIO_5_PORT                          GPIOC
 #define RADIO_DIO_5_PIN                           GPIO_PIN_7
 #endif
-
-
 
 #define RADIO_ANT_SWITCH_PORT                     GPIOC
 #define RADIO_ANT_SWITCH_PIN                      GPIO_PIN_1
 
 #endif
 
-/*  SPI MACRO redefinition */
+/* External variables --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+/* Exported functions ------------------------------------------------------- */ 
 
-#define SPI_CLK_ENABLE()                __HAL_RCC_SPI1_CLK_ENABLE()
-
-
-#define SPI1_AF                          GPIO_AF5_SPI1  
-
-/* ADC MACRO redefinition */
-
-
-#define ADC_READ_CHANNEL                 ADC_CHANNEL_3
-#define ADCCLK_ENABLE()                 __HAL_RCC_ADC1_CLK_ENABLE() ;
-#define ADCCLK_DISABLE()                 __HAL_RCC_ADC1_CLK_DISABLE() ;
+   
+/*!
+ * GPIO IRQ handler function prototype
+ */
 
 
-/* --------------------------- RTC HW definition -------------------------------- */
-
-#define RTC_OUTPUT       DBG_RTC_OUTPUT
-
-/* --------------------------- USART HW definition -------------------------------*/
-#define USARTx                           USART2
-#define USARTx_CLK_ENABLE()              __USART2_CLK_ENABLE();
-#define USARTx_RX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
-#define USARTx_TX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE() 
-#define DMAx_CLK_ENABLE()                __HAL_RCC_DMA1_CLK_ENABLE()
-
-#define USARTx_FORCE_RESET()             __USART2_FORCE_RESET()
-#define USARTx_RELEASE_RESET()           __USART2_RELEASE_RESET()
+IRQn_Type MSP_GetIRQn( uint16_t gpioPin);
 
 
-#define USARTx_TX_PIN                  GPIO_PIN_2
-#define USARTx_TX_GPIO_PORT            GPIOA  
-#define USARTx_TX_AF                   GPIO_AF7_USART2
-#define USARTx_RX_PIN                  GPIO_PIN_3
-#define USARTx_RX_GPIO_PORT            GPIOA 
-#define USARTx_RX_AF                   GPIO_AF7_USART2
+/*!
+ * @brief Initializes the given GPIO object
+ *
+ * @param  GPIOx: where x can be (A..E and H)
+ * @param  GPIO_Pin: specifies the port bit to be written.
+ *                   This parameter can be one of GPIO_PIN_x where x can be (0..15).
+ *                   All port bits are not necessarily available on all GPIOs.
+ * @param [IN] initStruct  GPIO_InitTypeDef intit structure
+ * @retval none
+ */
+void HW_GPIO_Init( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_InitTypeDef* initStruct);
 
-/* Definition for USARTx's NVIC */
-#define USARTx_IRQn                      USART2_IRQn
-#define USARTx_IRQHandler                USART2_IRQHandler
+/*!
+ * @brief Records the interrupt handler for the GPIO  object
+ *
+ * @param  GPIOx: where x can be (A..E and H) 
+ * @param  GPIO_Pin: specifies the port bit to be written.
+ *                   This parameter can be one of GPIO_PIN_x where x can be (0..15).
+ *                   All port bits are not necessarily available on all GPIOs.
+ * @param [IN] prio       NVIC priority (0 is highest)
+ * @param [IN] irqHandler  points to the  function to execute
+ * @retval none
+ */
+void HW_GPIO_SetIrq( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint32_t prio,  GpioIrqHandler *irqHandler );
 
-/* Definition for USARTx's DMA */
-#define USARTx_TX_DMA_CHANNEL             DMA1_Channel7
+/*!
+ * @brief Execute the interrupt from the object
+ *
+ * @param  GPIOx: where x can be (A..E and H) 
+ * @param  GPIO_Pin: specifies the port bit to be written.
+ *                   This parameter can be one of GPIO_PIN_x where x can be (0..15).
+ *                   All port bits are not necessarily available on all GPIOs.
+ * @retval none
+ */
+void HW_GPIO_IrqHandler( uint16_t GPIO_Pin );
 
-/* Definition for USARTx's NVIC */
-#define USARTx_DMA_TX_IRQn                DMA1_Channel7_IRQn
-#define USARTx_DMA_TX_IRQHandler          DMA1_Channel7_IRQHandler
+/*!
+ * @brief Writes the given value to the GPIO output
+ *
+ * @param  GPIO_Pin: specifies the port bit to be written.
+ *                   This parameter can be one of GPIO_PIN_x where x can be (0..15).
+ *                   All port bits are not necessarily available on all GPIOs.
+ * @param [IN] value New GPIO output value
+ * @retval none
+ */
+void HW_GPIO_Write( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin,  uint32_t value );
 
-#define USARTx_Priority 0
-#define USARTx_DMA_Priority 0
-
-/* --------------------------- DEBUG redefinition -------------------------------*/
-
-#define __HAL_RCC_DBGMCU_CLK_ENABLE()
-#define __HAL_RCC_DBGMCU_CLK_DISABLE()
-
-#define LED_Toggle( x )
-#define LED_On( x )
-#define LED_Off( x )
+/*!
+ * @brief Reads the current GPIO input value
+ *
+ * @param  GPIOx: where x can be (A..E and H) 
+ * @param  GPIO_Pin: specifies the port bit to be written.
+ *                   This parameter can be one of GPIO_PIN_x where x can be (0..15).
+ *                   All port bits are not necessarily available on all GPIOs.
+ * @retval value   Current GPIO input value
+ */
+uint32_t HW_GPIO_Read( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __HW_CONF_L1_H__ */
-
+#endif /* __HW_GPIO_H__ */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

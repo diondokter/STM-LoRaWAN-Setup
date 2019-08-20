@@ -68,18 +68,17 @@
 									<listOptionValue builtIn="false" value="../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/LoRaWAN/Core"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/LoRaWAN/Crypto"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/LoRaWAN/Mac"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/LoRaWAN/Mac/region"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/LoRaWAN/Phy"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/LoRaWAN/Utilities"/>
-									<listOptionValue builtIn="false" value="../Core/Inc/LoRa"/>
-									<listOptionValue builtIn="false" value="../Core/Inc/LoRa/Conf"/>
-									<listOptionValue builtIn="false" value="../Drivers/BSP/STM32L1xx_Nucleo"/>
-									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/Common"/>
-									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/sx1276"/>
-									<listOptionValue builtIn="false" value="../Drivers/BSP/SX1276MB1MAS"/>
+									<listOptionValue builtIn="false" value="../LoRa/BSP/Components/Common"/>
+									<listOptionValue builtIn="false" value="../LoRa/BSP/SX1276MB1MAS"/>
+									<listOptionValue builtIn="false" value="../LoRa/BSP/Components/sx1276"/>
+									<listOptionValue builtIn="false" value="../LoRa"/>
+									<listOptionValue builtIn="false" value="../LoRa/Conf"/>
+									<listOptionValue builtIn="false" value="../LoRa/LoRaWAN/Core"/>
+									<listOptionValue builtIn="false" value="../LoRa/LoRaWAN/Crypto"/>
+									<listOptionValue builtIn="false" value="../LoRa/LoRaWAN/Mac"/>
+									<listOptionValue builtIn="false" value="../LoRa/LoRaWAN/Mac/region"/>
+									<listOptionValue builtIn="false" value="../LoRa/LoRaWAN/Phy"/>
+									<listOptionValue builtIn="false" value="../LoRa/LoRaWAN/Utilities"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1644157720" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -109,7 +108,8 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
-						<entry excluding="BSP/B-L072Z-LRWAN1/|BSP/CMWX1ZZABZ-0xx/|BSP/LRWAN_NS1/|BSP/MDM32L07X01/|BSP/STM32L0xx_Nucleo/|BSP/STM32L4xx_Nucleo/|BSP/SX1261DVK1BAS/|BSP/SX1262DVK1CAS/|BSP/SX1262DVK1DAS/|BSP/SX1276MB1LAS/|BSP/SX1272MB2DAS/|BSP/X_NUCLEO_IKS01A1/|BSP/X_NUCLEO_IKS01A2/|BSP/Components/lis3mdl/|BSP/Components/lsm303agr/|BSP/Components/lsm6ds0/|BSP/Components/lsm6ds3/|BSP/Components/lsm6dsl/|BSP/Components/sx126x/|BSP/Components/sx1272/|BSP/I_NUCLEO_LRWAN1/i_nucleo_lrwan1_wm_sg_sm_xx.c|BSP/I_NUCLEO_LRWAN1/i_nucleo_lrwan1_wm_sg_sm_xx.h|BSP/I_NUCLEO_LRWAN1/|BSP/Components/hts221/|BSP/Components/lps22hb/|BSP/Components/lps25hb/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Drivers"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Drivers"/>
+						<entry excluding="BSP/B-L072Z-LRWAN1/|BSP/CMWX1ZZABZ-0xx/|BSP/Components/Common/|BSP/Components/hts221/|BSP/Components/lis3mdl/|BSP/Components/lps22hb/|BSP/Components/lps25hb/|BSP/Components/lsm303agr/|BSP/Components/lsm6ds0/|BSP/Components/lsm6ds3/|BSP/Components/lsm6dsl/|BSP/Components/sx126x/|BSP/Components/sx1272/|BSP/I_NUCLEO_LRWAN1/|BSP/LRWAN_NS1/|BSP/MDM32L07X01/|BSP/STM32L0xx_Nucleo/|BSP/STM32L1xx_Nucleo/|BSP/STM32L4xx_Nucleo/|BSP/SX1261DVK1BAS/|BSP/SX1262DVK1CAS/|BSP/SX1262DVK1DAS/|BSP/SX1272MB2DAS/|BSP/SX1276MB1LAS/|BSP/X_NUCLEO_IKS01A1/|BSP/X_NUCLEO_IKS01A2/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LoRa"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Startup"/>
 					</sourceEntries>
@@ -224,10 +224,11 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Startup"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="LoRa"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Startup"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

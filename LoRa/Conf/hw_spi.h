@@ -41,6 +41,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
+#define SPI_CLK_ENABLE()                __HAL_RCC_SPI1_CLK_ENABLE()
+#define SPI1_AF                          GPIO_AF5_SPI1
 /* External variables --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */ 

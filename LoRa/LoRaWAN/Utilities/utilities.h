@@ -34,7 +34,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define __UTILITIES_H__
 
 
-#include "hw_conf.h"
+#include <stdint.h>
+#include <cmsis_gcc.h>
 #include "trace.h"
 /* BACKUP_PRIMASK MUST be implemented at the begining of the funtion 
    that implement a critical section                        
@@ -56,7 +57,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define ALIGN(n)             __attribute__((aligned(n)))
 
 /* delay definition */
- #define DelayMs(n)             HAL_Delay(n) 
+#define DelayMs(n)             HAL_Delay(n)
 
 typedef uint32_t TimerTime_t;
 #define TIMERTIME_T_MAX                             ( ( uint32_t )~0 )

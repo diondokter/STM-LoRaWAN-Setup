@@ -173,12 +173,6 @@ typedef struct sLoRaMainCallback
     void ( *LORA_HasJoined)( void );
 /*!
  * @brief Confirms the class change 
- *
- * @param [IN] AppData is a buffer to process
- *
- * @param [IN] port is a Application port on wicth Appdata will be sent
- *
- * @param [IN] length is the number of recieved bytes
  */
     void ( *LORA_ConfirmClass) ( DeviceClass_t Class );
 /*!

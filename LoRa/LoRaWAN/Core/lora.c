@@ -93,11 +93,6 @@ static MibRequestConfirm_t mibReq;
 
 static LoRaMainCallback_t *LoRaMainCallbacks;
 
-extern lora_AppData_t AppData;
-
-
-
-
 
 /*!
  * MAC event info status strings.
@@ -839,11 +834,9 @@ static void TraceUpLinkFrame(McpsConfirm_t *mcpsConfirm)
     LoRaMacMibGetRequestConfirm( &mibReq );
   
     TVL2( PRINTF("\r\n" );)
-    TVL2( PRINTNOW(); PRINTF("#= U/L FRAME %lu =# Class %c, Port %d, data size %d, pwr %d, ", \
+    TVL2( PRINTNOW(); PRINTF("#= U/L FRAME %lu =# Class %c, pwr %d, ", \
                              mcpsConfirm->UpLinkCounter, \
                              "ABC"[mibReq.Param.Class], \
-                             AppData.Port, \
-                             AppData.BuffSize, \
                              mcpsConfirm->TxPower );)
 
     mibGet.Type  = MIB_CHANNELS_MASK;
